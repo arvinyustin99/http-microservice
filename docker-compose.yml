@@ -1,0 +1,17 @@
+version: '2'
+services:
+  http-microservice:
+    build: .
+    command: node server.js
+    ports:
+      - "3320:8080"
+  db:
+    build: ./db
+    restart: always
+    environment:
+      - MYSQL_ROOT_HOST=root
+      - MARIADB_ALLOW_EMPTY_PASSWORD=true
+      - MARIADB_TCP_PORT=3306
+      - MARIADB_UNIX_PORT=3306
+    ports:
+      - "3301:3306"
