@@ -9,7 +9,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-	connection.query('SELECT INTO students (name) VALUES (\'' + req.body.name + '\')', (err, result, fields) => {
+	connection.query('INSERT INTO student (name) VALUES (\'' + req.body.name + '\')', (err, result, fields) => {
 		if (err)
 			throw err;
 		res.json(result);

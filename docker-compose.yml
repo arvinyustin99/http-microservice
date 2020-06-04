@@ -1,17 +1,22 @@
-version: '2'
+version: '3.5'
 services:
-  http-microservice:
-    build: .
-    command: node server.js
-    ports:
-      - "3320:8080"
   db:
     build: ./db
-    restart: always
-    environment:
-      - MYSQL_ROOT_HOST=root
-      - MARIADB_ALLOW_EMPTY_PASSWORD=true
-      - MARIADB_TCP_PORT=3306
-      - MARIADB_UNIX_PORT=3306
+    networks:
+      - new-network
+  http:
+    build: .
+    command: node server.js
+    volumes:
+      - /http-microservice
+    networks:
+      - new-network
     ports:
-      - "3301:3306"
+      - "4000:3306"
+      - "5000:8080"
+    depends_on:
+      - "db"
+networks:
+  new-network:
+    name: new-network-latihan
+    driver: bridge
